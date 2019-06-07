@@ -26,6 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const nodeMap = new Map();
 
   // audio
+  let context;
   let g;
 
   const updateMenu = () => {
@@ -94,7 +95,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const startGame = async () => {
     await document.documentElement.requestFullscreen();
     if (firstStart) {
-      let context = new AudioContext();
+      context = new AudioContext();
       let o = context.createOscillator();
       g = context.createGain();
       o.connect(g);
