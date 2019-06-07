@@ -6,7 +6,7 @@ const ce = (name, attrs = {}, nested = []) => {
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
-  // await document.documentElement.requestFullscreen();
+  await document.documentElement.requestFullscreen();
 
   // game vars
   let disappearSpeed = 2;
