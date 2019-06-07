@@ -6,8 +6,6 @@ const ce = (name, attrs = {}, nested = []) => {
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
-  await document.documentElement.requestFullscreen();
-
   // game vars
   let disappearSpeed = 2;
   let appearSpeed = 1;
@@ -20,6 +18,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   let score = 0;
   let highScore = parseInt(localStorage.getItem('highScore')) || 0;
   let makeCircleTimeout = null;
+  let firstStart = true;
 
   // elements etc
   const menu = document.getElementById('menu');
@@ -27,13 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const nodeMap = new Map();
 
   // audio
-  const context = new AudioContext();
-  const o = context.createOscillator();
-  const g = context.createGain();
-  o.connect(g);
-  g.connect(context.destination);
-  g.gain.value = 0;
-  o.start(0);
+  let g;
 
   const updateMenu = () => {
     document.getElementById('high_score').innerText = highScore.toString();
@@ -98,7 +91,18 @@ window.addEventListener('DOMContentLoaded', async () => {
     makeCircleTimeout = setTimeout(makeCircle, appearSpeed * 1000);
   };
 
-  const startGame = () => {
+  const startGame = async () => {
+    await document.documentElement.requestFullscreen();
+    if (firstStart) {
+      let context = new AudioContext();
+      let o = context.createOscillator();
+      context.createGain();
+      o.connect(g);
+      g.connect(context.destination);
+      g.gain.value = 0;
+      o.start(0);
+    }
+    firstStart = false;
     score = 0;
     gameOver = false;
     svg.innerHTML = '';
