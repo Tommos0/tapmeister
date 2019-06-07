@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (firstStart) {
       let context = new AudioContext();
       let o = context.createOscillator();
-      context.createGain();
+      g = context.createGain();
       o.connect(g);
       g.connect(context.destination);
       g.gain.value = 0;
